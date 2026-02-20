@@ -1,0 +1,160 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+
+const directors = [
+  {
+    name: 'Sarah Johnson',
+    position: 'President',
+    subdivision: 'Rose Gardens',
+    email: 'sarah.johnson@bloomvillage.org',
+    bio: 'Sarah has been a resident of Bloom Village for 8 years and has served on the board for 4 years. She is passionate about community engagement and maintaining our beautiful landscaping.',
+    image: 'https://picsum.photos/seed/sarah/300/300'
+  },
+  {
+    name: 'Michael Chen',
+    position: 'Vice President',
+    subdivision: 'Tulip Hill',
+    email: 'michael.chen@bloomvillage.org',
+    bio: 'Michael is a software engineer who moved to Bloom Village 6 years ago. He focuses on technology improvements and community safety initiatives.',
+    image: 'https://picsum.photos/seed/michael/300/300'
+  },
+  {
+    name: 'Jennifer Martinez',
+    position: 'Treasurer',
+    subdivision: 'Lavender Lane',
+    email: 'jennifer.martinez@bloomvillage.org',
+    bio: 'Jennifer is a certified accountant with 10 years of experience managing HOA finances. She ensures our community remains financially healthy.',
+    image: 'https://picsum.photos/seed/jennifer/300/300'
+  },
+  {
+    name: 'David Thompson',
+    position: 'Secretary',
+    subdivision: 'Sunflower Square',
+    email: 'david.thompson@bloomvillage.org',
+    bio: 'David has been documenting our community meetings for 5 years. He is dedicated to transparent communication and record-keeping.',
+    image: 'https://picsum.photos/seed/david/300/300'
+  },
+  {
+    name: 'Lisa Park',
+    position: 'Board Member',
+    subdivision: 'Daisy Dale',
+    email: 'lisa.park@bloomvillage.org',
+    bio: 'Lisa is our community events coordinator and has organized numerous successful gatherings. She believes in fostering neighbor connections.',
+    image: 'https://picsum.photos/seed/lisa/300/300'
+  },
+  {
+    name: 'Robert Wilson',
+    position: 'Board Member',
+    subdivision: 'Rose Gardens',
+    email: 'robert.wilson@bloomvillage.org',
+    bio: 'Robert is our maintenance committee chair and oversees all property improvements. He has extensive experience in construction and landscaping.',
+    image: 'https://picsum.photos/seed/robert/300/300'
+  }
+];
+---
+
+<Layout title="Bloom Village HOA - Board of Directors">
+  <Navbar currentPage="about" />
+
+  <div class="py-8 space-y-16">
+    <!-- Header -->
+    <section class="max-w-7xl mx-auto px-4 text-center">
+      <h1 class="text-5xl lg:text-6xl font-bold text-slate-900 dark:text-white mb-6">Board of Directors</h1>
+      <p class="text-lg text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
+        Meet the dedicated volunteers who lead and serve our Bloom Village community. Our board members work tirelessly to maintain our beautiful neighborhood and foster community spirit.
+      </p>
+    </section>
+
+    <!-- Directors Grid -->
+    <section class="max-w-7xl mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {directors.map((director) => (
+          <div class="bg-white dark:bg-slate-800 rounded-2xl overflow-hidden shadow-sm border border-slate-100 dark:border-slate-700 hover:shadow-lg transition-shadow group">
+            <div class="aspect-square overflow-hidden">
+              <img
+                src={director.image}
+                alt={director.name}
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              />
+            </div>
+            <div class="p-6">
+              <div class="mb-4">
+                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-1">{director.name}</h3>
+                <p class="text-emerald-600 dark:text-emerald-400 font-semibold">{director.position}</p>
+                <p class="text-slate-500 dark:text-slate-400 text-sm">{director.subdivision}</p>
+              </div>
+              <p class="text-slate-600 dark:text-slate-400 text-sm mb-4 leading-relaxed">
+                {director.bio}
+              </p>
+              <a
+                href={`mailto:${director.email}`}
+                class="inline-flex items-center text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 font-medium transition-colors"
+              >
+                <i class="fas fa-envelope mr-2"></i>
+                Contact
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Contact CTA -->
+    <section class="bg-emerald-50 dark:bg-slate-800 py-16">
+      <div class="max-w-4xl mx-auto px-4 text-center">
+        <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-4">Get Involved</h2>
+        <p class="text-slate-600 dark:text-slate-400 mb-8 max-w-2xl mx-auto">
+          Interested in serving on the board or have questions for our directors? We'd love to hear from you.
+        </p>
+        <a
+          href="/contact"
+          class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-4 rounded-full font-bold transition-all shadow-lg hover:shadow-emerald-900/40"
+        >
+          Contact the Board
+        </a>
+      </div>
+    </section>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-slate-900 dark:bg-slate-800 text-white py-16 mt-20 transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-12">
+      <div class="col-span-1 md:col-span-2">
+        <div class="flex items-center mb-6">
+          <div class="bg-emerald-600 p-2 rounded-lg mr-3">
+            <i class="fas fa-seedling text-white"></i>
+          </div>
+          <span class="text-2xl font-bold">Bloom Village HOA</span>
+        </div>
+        <p class="text-slate-400 max-w-sm mb-6">
+          Maintaining the beauty and harmony of our community through proactive management and resident engagement across all 5 subdivisions.
+        </p>
+      </div>
+
+      <div>
+        <h4 class="font-bold mb-6 text-emerald-400 uppercase tracking-widest text-xs">Subdivisions</h4>
+        <ul class="space-y-3 text-slate-400 text-sm">
+          <li><a href="#" class="hover:text-white transition-colors">Rose Gardens</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Tulip Hill</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Lavender Lane</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Sunflower Square</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Daisy Dale</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="font-bold mb-6 text-emerald-400 uppercase tracking-widest text-xs">Quick Links</h4>
+        <ul class="space-y-3 text-slate-400 text-sm">
+          <li><a href="/" class="hover:text-white transition-colors">Home</a></li>
+          <li><a href="/news" class="hover:text-white transition-colors">News</a></li>
+          <li><a href="/about" class="hover:text-white transition-colors">Board</a></li>
+          <li><a href="/contact" class="hover:text-white transition-colors">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="max-w-7xl mx-auto px-4 mt-16 pt-8 border-t border-slate-800 text-center text-slate-500 text-xs">
+      <p>© 2024 Bloom Village Home Owners Association. All rights reserved.</p>
+    </div>
+  </footer>
+</Layout>

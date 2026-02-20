@@ -1,0 +1,222 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('news');
+  return posts.map(post => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+
+// Get related posts (same category or subdivision)
+const allPosts = await getCollection('news');
+const relatedPosts = allPosts
+  .filter(p => p.slug !== post.slug && (p.data.category === post.data.category || p.data.subdivision === post.data.subdivision))
+  .slice(0, 3);
+---
+
+<Layout title={`${post.data.title} - Boom Village HOA`}>
+  <Navbar currentPage="news" />
+  
+  <article class="py-8">
+    <!-- Breadcrumb -->
+    <nav class="max-w-4xl mx-auto px-4 mb-8 text-sm text-slate-600 dark:text-slate-400">
+      <a href="/" class="hover:text-emerald-600 dark:hover:text-emerald-400">Home</a>
+      <span class="mx-3 text-slate-300 dark:text-slate-600">/</span>
+      <a href="/news" class="hover:text-emerald-600 dark:hover:text-emerald-400">News</a>
+      <span class="mx-3 text-slate-300 dark:text-slate-600">/</span>
+      <span class="text-slate-900 dark:text-white font-bold">{post.data.title}</span>
+    </nav>
+
+    <!-- Header -->
+    <header class="max-w-4xl mx-auto px-4 mb-12">
+      <div class="flex flex-wrap gap-3 mb-6">
+        <span class="inline-block bg-emerald-100 dark:bg-emerald-900 text-emerald-800 dark:text-emerald-200 px-4 py-2 rounded-full text-sm font-bold uppercase tracking-widest">
+          {post.data.category}
+        </span>
+        <span class="inline-block bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 px-4 py-2 rounded-full text-sm font-bold flex items-center">
+          <i class="fas fa-map-pin mr-2 text-slate-500 dark:text-slate-400"></i>
+          {post.data.subdivision}
+        </span>
+      </div>
+      
+      <h1 class="text-5xl lg:text-6xl font-bold text-slate-900 dark:text-white mb-6 leading-tight">
+        {post.data.title}
+      </h1>
+      
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6 pb-8 border-b border-slate-200">
+        <div class="flex items-center space-x-4">
+          <div class="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center">
+            <i class="fas fa-user text-emerald-600"></i>
+          </div>
+          <div>
+            <p class="font-bold text-slate-900">{post.data.author}</p>
+            <p class="text-sm text-slate-600">
+              <i class="fas fa-calendar-alt mr-2"></i>
+              {new Date(post.data.date).toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+              })}
+            </p>
+          </div>
+        </div>
+        <div class="flex items-center space-x-3">
+          <button class="p-3 rounded-full border border-slate-200 hover:bg-slate-50 transition-colors" title="Share on Facebook">
+            <i class="fab fa-facebook-f text-slate-600"></i>
+          </button>
+          <button class="p-3 rounded-full border border-slate-200 hover:bg-slate-50 transition-colors" title="Share on Twitter">
+            <i class="fab fa-twitter text-slate-600"></i>
+          </button>
+          <button class="p-3 rounded-full border border-slate-200 hover:bg-slate-50 transition-colors" title="Copy link">
+            <i class="fas fa-link text-slate-600"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Featured Image -->
+    {post.data.imageUrl && (
+      <div class="max-w-4xl mx-auto px-4 mb-12">
+        <img 
+          src={post.data.imageUrl} 
+          alt={post.data.title}
+          class="w-full h-96 object-cover rounded-2xl shadow-xl"
+        />
+      </div>
+    )}
+
+    <!-- Content -->
+    <div class="max-w-4xl mx-auto px-4">
+      <div class="prose prose-lg max-w-none mb-12">
+        <Content />
+      </div>
+    </div>
+
+    <!-- Related Posts -->
+    {relatedPosts.length > 0 && (
+      <section class="bg-slate-50 py-16 mt-16">
+        <div class="max-w-4xl mx-auto px-4">
+          <h2 class="text-3xl font-bold text-slate-900 mb-8">Related Posts</h2>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {relatedPosts.map(relPost => (
+              <a 
+                href={`/news/${relPost.slug}`}
+                class="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all"
+              >
+                <div class="h-40 overflow-hidden bg-slate-200">
+                  <img 
+                    src={relPost.data.imageUrl} 
+                    alt={relPost.data.title}
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <div class="p-5">
+                  <div class="flex gap-2 mb-3">
+                    <span class="text-xs font-bold text-emerald-700 bg-emerald-50 px-2 py-1 rounded">
+                      {relPost.data.category}
+                    </span>
+                  </div>
+                  <h3 class="font-bold text-slate-900 group-hover:text-emerald-600 line-clamp-2 mb-2">
+                    {relPost.data.title}
+                  </h3>
+                  <p class="text-xs text-slate-500">
+                    {new Date(relPost.data.date).toLocaleDateString('en-US', { 
+                      month: 'short', 
+                      day: 'numeric' 
+                    })}
+                  </p>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- Back to News -->
+    <div class="max-w-4xl mx-auto px-4 py-12">
+      <a 
+        href="/news"
+        class="inline-block text-emerald-600 hover:text-emerald-800 font-bold flex items-center transition-colors"
+      >
+        <i class="fas fa-chevron-left mr-2"></i>
+        Back to News
+      </a>
+    </div>
+  </article>
+
+  <!-- Footer -->
+  <footer class="bg-slate-900 text-white py-16 mt-20">
+    <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-12">
+      <div class="col-span-1 md:col-span-2">
+        <div class="flex items-center mb-6">
+          <div class="bg-emerald-600 p-2 rounded-lg mr-3">
+            <i class="fas fa-seedling text-white"></i>
+          </div>
+          <span class="text-2xl font-bold">Boom Village HOA</span>
+        </div>
+        <p class="text-slate-400 max-w-sm mb-6">
+          Maintaining the beauty and harmony of our community through proactive management and resident engagement across all 5 subdivisions.
+        </p>
+      </div>
+      
+      <div>
+        <h4 class="font-bold mb-6 text-emerald-400 uppercase tracking-widest text-xs">Subdivisions</h4>
+        <ul class="space-y-3 text-slate-400 text-sm">
+          <li><a href="#" class="hover:text-white transition-colors">Rose Gardens</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Tulip Hill</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Lavender Lane</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Sunflower Square</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Daisy Dale</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="font-bold mb-6 text-emerald-400 uppercase tracking-widest text-xs">Quick Links</h4>
+        <ul class="space-y-3 text-slate-400 text-sm">
+          <li><a href="/" class="hover:text-white transition-colors">Home</a></li>
+          <li><a href="/news" class="hover:text-white transition-colors">News</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Documents</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="max-w-7xl mx-auto px-4 mt-16 pt-8 border-t border-slate-800 text-center text-slate-500 text-xs">
+      <p>© 2024 Boom Village Home Owners Association. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <style>
+    .prose {
+      --tw-prose-body: rgb(15 23 42);
+      --tw-prose-headings: rgb(15 23 42);
+      --tw-prose-links: rgb(5 150 105);
+      --tw-prose-bold: rgb(15 23 42);
+      --tw-prose-counters: rgb(15 23 42);
+    }
+
+    .prose h2,
+    .prose h3 {
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .prose p {
+      line-height: 1.75;
+      margin-bottom: 1.25rem;
+    }
+
+    .prose ul,
+    .prose ol {
+      margin-bottom: 1.25rem;
+      padding-left: 1.625rem;
+    }
+  </style>
+</Layout>

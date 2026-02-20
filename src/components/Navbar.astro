@@ -1,0 +1,76 @@
+---
+interface Props {
+  currentPage?: string;
+}
+
+const { currentPage = 'home' } = Astro.props as Props;
+---
+
+<nav class="bg-white dark:bg-slate-800 shadow-sm sticky top-0 z-50 transition-colors duration-300">
+  <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+    <a href="/" class="flex items-center hover:opacity-80 transition-opacity">
+      <div class="bg-emerald-600 p-2 rounded-lg mr-3">
+        <i class="fas fa-seedling text-white"></i>
+      </div>
+      <h1 class="text-2xl font-bold text-slate-900 dark:text-white">Bloom Village HOA</h1>
+    </a>
+
+    <div class="flex items-center space-x-8">
+      <a
+        href="/"
+        class={`font-semibold transition-colors ${
+          currentPage === 'home' 
+            ? 'text-emerald-600 dark:text-emerald-400' 
+            : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
+        }`}
+      >
+        Home
+      </a>
+      <a
+        href="/news"
+        class={`font-semibold transition-colors ${
+          currentPage === 'news' 
+            ? 'text-emerald-600 dark:text-emerald-400' 
+            : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
+        }`}
+      >
+        News
+      </a>
+      <a
+        href="/about"
+        class={`font-semibold transition-colors ${
+          currentPage === 'about' 
+            ? 'text-emerald-600 dark:text-emerald-400' 
+            : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
+        }`}
+      >
+        Board
+      </a>
+      <a
+        href="/contact"
+        class={`font-semibold transition-colors ${
+          currentPage === 'contact' 
+            ? 'text-emerald-600 dark:text-emerald-400' 
+            : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
+        }`}
+      >
+        Contact
+      </a>
+      <a
+        href="/announcements"
+        class={`font-semibold transition-colors ${
+          currentPage === 'announcements' 
+            ? 'text-emerald-600 dark:text-emerald-400' 
+            : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
+        }`}
+      >
+        Announcements
+      </a>
+  </div>
+</nav>
+
+<style scoped>
+  nav {
+    background-color: white;
+  }
+</style>
