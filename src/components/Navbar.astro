@@ -6,8 +6,11 @@ interface Props {
 const { currentPage = 'home' } = Astro.props as Props;
 ---
 
+<!-- Navigation bar that appears at the top of every page -->
+<!-- Contains links to main sections of the website -->
 <nav class="bg-white dark:bg-slate-800 shadow-sm sticky top-0 z-50 transition-colors duration-300">
   <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+    <!-- Logo and home link - clicking this takes users back to the main homepage -->
     <a href="/" class="flex items-center hover:opacity-80 transition-opacity">
       <div class="bg-emerald-600 p-2 rounded-lg mr-3">
         <i class="fas fa-seedling text-white"></i>
@@ -16,6 +19,7 @@ const { currentPage = 'home' } = Astro.props as Props;
     </a>
 
     <div class="flex items-center space-x-8">
+      <!-- Home link - takes users to the main page with featured news and community overview -->
       <a
         href="/"
         class={`font-semibold transition-colors ${
@@ -26,6 +30,7 @@ const { currentPage = 'home' } = Astro.props as Props;
       >
         Home
       </a>
+      <!-- News link - shows all community news articles, events, and updates -->
       <a
         href="/news"
         class={`font-semibold transition-colors ${
@@ -36,6 +41,7 @@ const { currentPage = 'home' } = Astro.props as Props;
       >
         News
       </a>
+      <!-- Board link - displays information about HOA board members and their contact details -->
       <a
         href="/about"
         class={`font-semibold transition-colors ${
@@ -46,6 +52,7 @@ const { currentPage = 'home' } = Astro.props as Props;
       >
         Board
       </a>
+      <!-- Contact link - provides contact form and information for reaching the HOA -->
       <a
         href="/contact"
         class={`font-semibold transition-colors ${
@@ -56,6 +63,7 @@ const { currentPage = 'home' } = Astro.props as Props;
       >
         Contact
       </a>
+      <!-- Announcements link - shows important notices and updates from the board -->
       <a
         href="/announcements"
         class={`font-semibold transition-colors ${

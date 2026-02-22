@@ -21,7 +21,7 @@ export default function NewsPage({ news }: NewsPageProps) {
 
   return (
     <div className="space-y-8">
-      {/* Header */}
+      {/* Header Section - Page title and description */}
       <section className="max-w-7xl mx-auto px-4">
         <div className="text-center mb-8">
           <h1 className="text-5xl lg:text-6xl font-bold text-slate-900 dark:text-white mb-4">Community News & Updates</h1>
@@ -29,9 +29,11 @@ export default function NewsPage({ news }: NewsPageProps) {
             Stay informed about important announcements, events, and community updates from all our subdivisions.
           </p>
         </div>
+        {/* Search Bar - Allows users to search news articles by keywords */}
         <SearchBar onSearch={setSearchQuery} />
       </section>
 
+      {/* News Filter Component - Handles filtering by subdivision/category and displays news grid */}
       <NewsFilter news={news} searchQuery={searchQuery} />
     </div>
   );

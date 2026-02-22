@@ -52,9 +52,10 @@ export default function NewsFilter({ news, searchQuery }: NewsFilterProps) {
 
   return (
     <div className="space-y-8">
-      {/* Filter Section */}
+      {/* Filter Section - Sticky filter bar that allows users to narrow down news by subdivision and category */}
       <section className="bg-emerald-50 dark:bg-slate-800 py-8 sticky top-0 z-40 border-y border-emerald-100 dark:border-slate-700 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 space-y-6">
+          {/* Subdivision Filter - Buttons to show news from specific neighborhoods only */}
           <div>
             <h3 className="font-bold text-slate-800 dark:text-slate-200 mb-4">Filter by Subdivision</h3>
             <div className="flex flex-wrap gap-3">
@@ -76,6 +77,7 @@ export default function NewsFilter({ news, searchQuery }: NewsFilterProps) {
             </div>
           </div>
 
+          {/* Category Filter - Buttons to show news by type (Events, Maintenance, etc.) */}
           <div>
             <h3 className="font-bold text-slate-800 dark:text-slate-200 mb-4">Filter by Category</h3>
             <div className="flex flex-wrap gap-3">
@@ -99,7 +101,7 @@ export default function NewsFilter({ news, searchQuery }: NewsFilterProps) {
         </div>
       </section>
 
-      {/* Posts Grid */}
+      {/* News Articles Grid - Displays filtered news articles as clickable cards */}
       <section className="max-w-7xl mx-auto px-4">
         <AnimatePresence mode="wait">
           <motion.div
@@ -133,6 +135,7 @@ export default function NewsFilter({ news, searchQuery }: NewsFilterProps) {
                       {new Date(post.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
                     </span>
                   </div>
+                  {/* Article Title Link - Clicking takes user to the full news article page */}
                   <a href={post.slug} className="block">
                     <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
                       {post.title}
