@@ -9,6 +9,8 @@ A modern, responsive website for the Bloom Village Home Owners Association built
 - ✅ **Interactive**: React components with smooth animations
 - ✅ **Content Management**: Integrated with Storyblok CMS
 - ✅ **SEO Ready**: Optimized for search engines
+- ✅ **View Transitions**: Native Astro transitions for SPA-like navigation
+- ✅ **Automated Sitemap**: Auto-generated sitemaps for better indexing
 - ✅ **TypeScript**: Full type safety throughout
 
 ## Pages
@@ -43,6 +45,11 @@ A modern, responsive website for the Bloom Village Home Owners Association built
 4. **Build for production:**
    ```bash
    npm run build
+   ```
+
+5. **Run tests:**
+   ```bash
+   npm run test
    ```
 
 ## Project Structure
